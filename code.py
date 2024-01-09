@@ -14,8 +14,8 @@ def game_scene():
     print("Hello Julien! This is my game.")
 
     # use a whileTrue loop to keep the game running
-    whileTrue :
+    while True :
         pass
 
-if__name__== "__main__":
+if __name__ == "__main__":
     game_scene()
