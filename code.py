@@ -7,15 +7,17 @@
 import stage
 import ugame
 
+
 def game_scene():
     # this function is the main game scene
-    
+
     # display Hello Julien
     print("Hello Julien! This is my game.")
 
     # use a whileTrue loop to keep the game running
-    while True :
+    while True:
         pass
+
 
 if __name__ == "__main__":
     game_scene()
