@@ -31,7 +31,39 @@ def game_scene():
     # use a whileTrue loop to keep the game running
     while True:
         # get user input
+        keys = ugame.buttons.get_pressed()
 
+        # if B is pressed, display B
+        if keys & ugame.K_X:
+            print("B")
+
+        # if A is pressed, display A
+        if keys & ugame.K_O:
+            print("A")
+        
+        # if Start is pressed, display Start
+        if keys & ugame.K_START:
+            print("Start")
+
+        # if Select is pressed, display Select
+        if keys & ugame.K_SELECT:
+            print("Select")
+        
+        # if right on the d-pad is pressed, move the ship right
+        if keys & ugame.K_RIGHT:
+            ship.move(ship.x + 1, ship.y)
+
+        # if left on the d-pad is pressed, move the ship left
+        if keys & ugame.K_LEFT:
+            ship.move(ship.x - 1, ship.y)
+
+        # if up on the d-pad is pressed, move the ship up
+        if keys & ugame.K_UP:
+            ship.move(ship.x, ship.y - 1)
+        
+        # if down on the d-pad is pressed, move the ship down
+        if keys & ugame.K_DOWN:
+            ship.move(ship.x, ship.y + 1)
         # update game logic
 
         # redraw Sprites
