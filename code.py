@@ -11,26 +11,21 @@ import ugame
 def game_scene():
     # this function is the main game scene
 
-<<<<<<< HEAD
     # declare image_bank_background variable
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
 
-    # declare image_bank_sprites 
+    # declare image_bank_sprites
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
 
     # declare ship
     ship = stage.Sprite(image_bank_sprites, 5, 75, 66)
 
     # declare background
-=======
-    # declare background variable
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
->>>>>>> 5ad680fe5396bd7cbfa4d7210b2ad04b661264b9
     background = stage.Grid(image_bank_background, 10, 8)
 
     # declare game, game layers, and render_block
     game = stage.Stage(ugame.display, 60)
-    game.layers = [ship]+ [background]
+    game.layers = [ship] + [background]
     game.render_block()
 
     # use a whileTrue loop to keep the game running
