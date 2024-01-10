@@ -12,7 +12,7 @@ def game_scene():
     # this function is the main game scene
 
     # declare background variable
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background")
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     background = stage.Grid(image_bank_background, 10, 8)
 
     # declare game
