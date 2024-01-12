@@ -20,13 +20,11 @@ def game_scene():
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
 
     # declare ship
-    ship = stage.Sprite(
-        image_bank_sprites, 5, 75, 66
-    )
+    ship = stage.Sprite(image_bank_sprites, 5, 75, 66)
 
     # declare background
     background = stage.Grid(
-        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+        image_bank_background, constants.SCREEN_X, constants.SCREEN_Y
     )
 
     # declare game, game layers, and render_block
@@ -57,8 +55,8 @@ def game_scene():
 
         # if right on the d-pad is pressed, move the ship right
         if keys & ugame.K_RIGHT:
-            # if the ship's x position <= constants.SCREEN_GRID_X, move the ship 1 unit right
-            if ship.x <= constants.SCREEN_X-constants.SPRITE_SIZE:
+            # if the ship's x position <= constants.SCREEN_X, move the ship 1 unit right
+            if ship.x <= constants.SCREEN_X - constants.SPRITE_SIZE:
                 ship.move(ship.x + 1, ship.y)
             else:
                 # otherwise set the ship's x-position to 0
@@ -71,7 +69,7 @@ def game_scene():
                 ship.move(ship.x - 1, ship.y)
             else:
                 # otherwise set the ship's x-position to constants.SCREEN_X-constants.SPRITE_SIZE
-                ship.move(constants.SCREEN_X-constants.SPRITE_SIZE, ship.y)
+                ship.move(constants.SCREEN_X - constants.SPRITE_SIZE, ship.y)
 
         # if up on the d-pad is pressed,then pass
         if keys & ugame.K_UP:
