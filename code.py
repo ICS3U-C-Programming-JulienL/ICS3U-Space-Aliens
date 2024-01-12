@@ -9,6 +9,55 @@ import stage
 import ugame
 
 
+def menu_scene():
+    # this function is the menu game scene
+
+    # declare image_bank_background variable
+    image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
+
+    # add text objects
+    text = []
+    text1 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PAlETTE, buffer=None
+    )
+    text1.move(20, 10)
+    text1.text("JulLam Studios")
+    text.append(text1)
+
+    text2 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PAlETTE, buffer=None
+    )
+    text2.move(40, 110)
+    text2.text("PRESS START")
+    text.append(text2)
+
+    # declare background
+    background = stage.Grid(
+        image_bank_mt_background, constants.SCREEN_X, constants.SCREEN_Y
+    )
+
+    # declare game and set FPS
+    game = stage.Stage(ugame.display, constants.FPS)
+
+    # set the game layers
+    game.layers = text + [background]
+
+    # render background and sprite list location
+    game.render_block()
+
+    # use a whileTrue loop to keep the game running
+    while True:
+        # get user input
+        keys = ugame.buttons.get_pressed()
+
+        # if Start is pressed, then pass
+        if keys & ugame.K_START != 0:
+            game_scene()
+
+        # redraw Sprites
+        game.tick()
+
+
 def game_scene():
     # this function is the main game scene
 
@@ -91,7 +140,7 @@ def game_scene():
             pass
 
         # if right on the d-pad is pressed, move the ship right
-        if keys & ugame.K_RIGHT:
+        if keys & ugame.K_RIGHT != 0:
             # if the ship's x position <= constants.SCREEN_X, move the ship 1 unit right
             if ship.x <= constants.SCREEN_X - constants.SPRITE_SIZE:
                 ship.move(ship.x + 1, ship.y)
@@ -100,7 +149,7 @@ def game_scene():
                 ship.move(0, ship.y)
 
         # if left on the d-pad is pressed
-        if keys & ugame.K_LEFT:
+        if keys & ugame.K_LEFT != 0:
             # if the ship's x position >= 0, move the ship 1 unit left
             if ship.x >= 0:
                 ship.move(ship.x - 1, ship.y)
@@ -126,4 +175,4 @@ def game_scene():
 
 
 if __name__ == "__main__":
-    game_scene()
+    menu_scene()
