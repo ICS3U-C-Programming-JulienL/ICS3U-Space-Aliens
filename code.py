@@ -11,7 +11,6 @@ import stage
 import ugame
 
 
-
 def splash_scene():
     # this function is the splash game scene
 
@@ -160,16 +159,6 @@ def game_scene():
         16,
     )
 
-    # create a list of lasers
-    lasers = []
-
-    # use a for loop to assign the lasers
-    for laser_number in range(constants.TOTAL_NUMBER_OF_LASERS):
-        a_single_laser = stage.Sprite(
-            image_bank_sprites, 10, constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
-        )
-        lasers.append(a_single_laser)
-
     # declare background
     background = stage.Grid(
         image_bank_background, constants.SCREEN_X, constants.SCREEN_Y
@@ -185,7 +174,7 @@ def game_scene():
     game = stage.Stage(ugame.display, constants.FPS)
 
     # set the game layers
-    game.layers = lasers + [ship] + [alien] + [background]
+    game.layers = [ship] + [alien] + [background]
 
     # render background and sprite list location
     game.render_block()
@@ -251,27 +240,10 @@ def game_scene():
         # update game logic
         # if the A button was just pressed . play pew sound effect
         if a_button == constants.button_state["button_just_pressed"]:
-            # fire a laser using a for loop
-            for laser_number in range(len(lasers)):
-                if lasers[laser_number].x < 0:
-                    lasers[laser_number].move(ship.x, ship.y)
-                    sound.play(pew_sound)
-                    break
-
-        # use a for loop to move the lasers on screen up
-        for laser_number in range(len(lasers)):
-            if lasers[laser_number].x > 0:
-                lasers[laser_number].move(
-                    lasers[laser_number].x,
-                    lasers[laser_number].y - constants.LASER_SPEED,
-                )
-            if lasers[laser_number].y < constants.OFF_TOP_SCREEN:
-                lasers[laser_number].move(
-                    constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
-                )
+            sound.play(pew_sound)
 
         # redraw Sprites
-        game.render_sprites(lasers + [ship] + [alien])
+        game.render_sprites([ship] + [alien])
         game.tick()
 
 
