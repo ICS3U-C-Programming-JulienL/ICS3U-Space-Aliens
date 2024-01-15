@@ -129,6 +129,9 @@ def menu_scene():
 def game_scene():
     # this function is the main game scene
 
+    # declare score
+    score = 0
+
     def show_alien():
         # this function takes an alien from off screen and puts on the screen
         for alien_number in range(len(aliens)):
@@ -300,6 +303,37 @@ def game_scene():
                         constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
                     )
                     show_alien()
+
+        # use a nested for loop for the collision between an alien and laser
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x > 0:
+                for alien_number in range(len(aliens)):
+                    if aliens[alien_number].x > 0:
+                        if stage.collide(
+                            lasers[laser_number].x + 6,
+                            lasers[laser_number].y + 2,
+                            lasers[laser_number].x + 11,
+                            lasers[laser_number].y + 12,
+                            aliens[alien_number].x + 1,
+                            aliens[alien_number].y,
+                            aliens[alien_number].x + 15,
+                            aliens[alien_number].y + 15,
+                        ):
+                            # an alien was hit
+                            aliens[alien_number].move(
+                                constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
+                            )
+                            lasers[laser_number].move(
+                                constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
+                            )
+                            sound.stop()
+
+                            # prepare sound
+                            boom_sound = open("boom.wav", "rb")
+                            sound.play(boom_sound)
+                            show_alien()
+                            show_alien()
+                            score = score + 1
 
         # redraw Sprites
         game.render_sprites(lasers + [ship] + aliens)
