@@ -4,6 +4,8 @@
 # Date: January 11, 2024
 # This is the code for the pybadge game "Space Aliens"
 
+import supervisor
+
 import random
 import time
 
@@ -86,14 +88,14 @@ def menu_scene():
     # add text objects
     text = []
     text1 = stage.Text(
-        width=29, height=12, font=None, palette=constants.RED_PAlETTE, buffer=None
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
     )
     text1.move(20, 10)
     text1.text("JulLam Studios")
     text.append(text1)
 
     text2 = stage.Text(
-        width=29, height=12, font=None, palette=constants.RED_PAlETTE, buffer=None
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
     )
     text2.move(40, 110)
     text2.text("PRESS START")
@@ -123,6 +125,59 @@ def menu_scene():
             game_scene()
 
         # redraw Sprites
+        game.tick()
+
+def game_over_scene(final_score):
+    # this function is the game over scene
+
+    # imageg bank for CircuitPython
+    image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
+
+    
+    # set the background to image 0 in the bank
+    background = stage.Grid(image_bank_2, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y)
+
+    # add text objects
+    text = []
+    text1 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text1.move(22, 20)
+    text1.text("Final Score: {:0>2d}".format(final_score))
+    text.append(text1)
+
+    text2 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text2.move(43, 60)
+    text2.text("GAME OVER")
+    text.append(text2)
+
+    text3= stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text3.move(32, 110)
+    text3.text("PRESS SELECT")
+    text.append(text3)
+
+    # declare game and set FPS
+    game = stage.Stage(ugame.display, constants.FPS)
+
+    # set the game layers
+    game.layers = text + [background]
+
+    # render background and sprite list location
+    game.render_block()
+
+    while True:
+        # get user input 
+        keys = ugame.buttons.get_pressed()
+
+        # start button selected
+        if keys & ugame.K_SELECT != 0:
+            supervisor.reload()
+
+        # update game logic
         game.tick()
 
 
@@ -371,6 +426,20 @@ def game_scene():
 
                             # render background and sprite list location
                             game.render_block()
+
+        # check if an alien is touching the ship
+        for alien_number in range(len(aliens)):
+            if aliens[alien_number].x > 0:
+                if stage.collide(aliens[alien_number].x+1, aliens[alien_number].y,
+                                        aliens[alien_number].x + 15, aliens[alien_number].y + 15,
+                                        ship.x, ship.y,
+                                        ship.x + 15, ship.y + 15):
+                    # alien hit the ship is true
+                    sound.stop()
+                    crash_sound = open("crash.wav", "rb")
+                    sound.play(crash_sound)
+                    time.sleep(3.0)
+                    game_over_scene(score)
 
         # redraw Sprites
         game.render_sprites(lasers + [ship] + aliens)
