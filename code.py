@@ -5,7 +5,6 @@
 # This is the code for the pybadge game "Space Aliens"
 
 import supervisor
-
 import random
 import time
 
@@ -127,15 +126,17 @@ def menu_scene():
         # redraw Sprites
         game.tick()
 
+
 def game_over_scene(final_score):
     # this function is the game over scene
 
     # imageg bank for CircuitPython
     image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
-    
     # set the background to image 0 in the bank
-    background = stage.Grid(image_bank_2, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y)
+    background = stage.Grid(
+        image_bank_2, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+    )
 
     # add text objects
     text = []
@@ -153,7 +154,7 @@ def game_over_scene(final_score):
     text2.text("GAME OVER")
     text.append(text2)
 
-    text3= stage.Text(
+    text3 = stage.Text(
         width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
     )
     text3.move(32, 110)
@@ -170,7 +171,7 @@ def game_over_scene(final_score):
     game.render_block()
 
     while True:
-        # get user input 
+        # get user input
         keys = ugame.buttons.get_pressed()
 
         # start button selected
@@ -430,10 +431,16 @@ def game_scene():
         # check if an alien is touching the ship
         for alien_number in range(len(aliens)):
             if aliens[alien_number].x > 0:
-                if stage.collide(aliens[alien_number].x+1, aliens[alien_number].y,
-                                        aliens[alien_number].x + 15, aliens[alien_number].y + 15,
-                                        ship.x, ship.y,
-                                        ship.x + 15, ship.y + 15):
+                if stage.collide(
+                    aliens[alien_number].x + 1,
+                    aliens[alien_number].y,
+                    aliens[alien_number].x + 15,
+                    aliens[alien_number].y + 15,
+                    ship.x,
+                    ship.y,
+                    ship.x + 15,
+                    ship.y + 15,
+                ):
                     # alien hit the ship is true
                     sound.stop()
                     crash_sound = open("crash.wav", "rb")
