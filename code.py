@@ -4,13 +4,13 @@
 # Date: January 11, 2024
 # This is the code for the pybadge game "Space Aliens"
 
-import supervisor
 
 import random
 import time
 
 import constants
 import stage
+import supervisor
 import ugame
 
 
