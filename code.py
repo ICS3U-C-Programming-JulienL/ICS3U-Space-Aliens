@@ -17,7 +17,7 @@ import ugame
 def splash_scene():
     # this function is the splash game scene
 
-    # get sound ready
+    # get intro sound ready and play it
     intro_sound = open("pacman_intro.wav", "rb")
     sound = ugame.audio
     sound.stop()
@@ -80,7 +80,7 @@ def splash_scene():
 
 
 def instructions_scene():
-    # this function is the menu game scene
+    # this function is the instructions game scene
 
     # declare image_bank_background variable
     image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
@@ -340,6 +340,7 @@ def game_scene(is_muted):
     life_text.cursor(0, 0)
     life_text.move(constants.SCREEN_X - 70, 1)
     life_text.text("Lives: {0}".format(lives))
+
     # declare score
     score = 0
 
@@ -634,12 +635,20 @@ def game_scene(is_muted):
                 ):
                     # alien hit the ship is true
                     sound.stop()
+
+                    # play crash sound
                     crash_sound = open("explosion_x.wav", "rb")
                     sound.play(crash_sound)
                     lives = lives - 1
+
+                    # move ship to the center
                     ship.move(75, constants.SCREEN_Y - (2 * constants.SPRITE_SIZE))
+
+                    # if the player has 0 lives, call the game over scene
                     if lives == 0:
                         game_over_scene(score)
+
+                    # display life text
                     life_text = stage.Text(width=29, height=14)
                     life_text.clear()
                     life_text.cursor(0, 0)
