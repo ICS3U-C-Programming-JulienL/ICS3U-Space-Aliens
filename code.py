@@ -4,12 +4,13 @@
 # Date: January 11, 2024
 # This is the code for the pybadge game "Space Aliens"
 
+import supervisor
+
 import random
 import time
 
 import constants
 import stage
-import supervisor
 import ugame
 
 
@@ -224,7 +225,6 @@ def menu_scene():
         game.tick()
 
 
-<<<<<<< HEAD
 def win_scene():
     # this function is the win scene
 
@@ -273,8 +273,6 @@ def win_scene():
         game.tick()
 
 
-=======
->>>>>>> 75bf683e25a1bb52729c35d1ddb681d0b1fd2c8c
 def game_over_scene(final_score):
     # this function is the game over scene
 
@@ -588,7 +586,7 @@ def game_scene(is_muted):
                             sound.stop()
 
                             # prepare sound
-                            boom_sound = open("alien_boom_one.wav", "rb")
+                            boom_sound = open("alien_boom.wav", "rb")
                             sound.play(boom_sound)
 
                             # make 2 more aliens
