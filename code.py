@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Created By: Julien Lamoureux
-# Date: January 11, 2024
+# Date: January 19, 2024
 # This is the code for the pybadge game "Space Aliens"
 
 
